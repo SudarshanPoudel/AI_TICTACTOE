@@ -192,58 +192,15 @@ void get_move(int& row, int& col, char player_mark) {
     cout << "Insert the value where you want to insert your element (1-9): ";
     int move;
     cin >> move;
-
-    switch (move) {
-        case 1:
-            row = 1;
-            col = 1;
-            break;
-        case 2:
-            row = 1;
-            col = 2;
-            break;
-        case 3:
-            row = 1;
-            col = 3;
-            break;
-        case 4:
-            row = 2;
-            col = 1;
-            break;
-        case 5:
-            row = 2;
-            col = 2;
-            break;
-        case 6:
-            row = 2;
-            col = 3;
-            break;
-        case 7:
-            row = 3;
-            col = 1;
-            break;
-        case 8:
-            row = 3;
-            col = 2;
-            break;
-        case 9:
-            row = 3;
-            col = 3;
-            break;
-        default:
-            cout << "Invalid input. Please enter a number between 1 and 9." << endl;
-            get_move(row, col,player_mark); // Recursive call to get a valid move
-            return;
-    }
-	
-	//
-    row--; // initializing base index to 0
-    col--;
-
-    if (row < 0 || row >= Size_of_board || col < 0 || col >= Size_of_board || board[row][col] != ' ') {
-        cout << "Invalid move. Try again." << endl;
-        get_move(row, col, player_mark);
-    }
+   if(move >= 1 && move <=9){
+	   row = (move-1)/3;
+	   col = (move-1)%3;
+   }
+   else{
+	cout << "Invalid input. Please enter a number between 1 and 9." << endl;
+  	get_move(row, col,player_mark); // Recursive call to get a valid move
+        return;
+   }
 }
 
 // Function to update the Tic Tac Toe board after a move
