@@ -193,57 +193,20 @@ void get_move(int& row, int& col, char player_mark) {
     int move;
     cin >> move;
 
-    switch (move) {
-        case 1:
-            row = 1;
-            col = 1;
-            break;
-        case 2:
-            row = 1;
-            col = 2;
-            break;
-        case 3:
-            row = 1;
-            col = 3;
-            break;
-        case 4:
-            row = 2;
-            col = 1;
-            break;
-        case 5:
-            row = 2;
-            col = 2;
-            break;
-        case 6:
-            row = 2;
-            col = 3;
-            break;
-        case 7:
-            row = 3;
-            col = 1;
-            break;
-        case 8:
-            row = 3;
-            col = 2;
-            break;
-        case 9:
-            row = 3;
-            col = 3;
-            break;
-        default:
-            cout << "Invalid input. Please enter a number between 1 and 9." << endl;
-            get_move(row, col,player_mark); // Recursive call to get a valid move
-            return;
-    }
-	
-	//
-    row--; // initializing base index to 0
-    col--;
-
-    if (row < 0 || row >= Size_of_board || col < 0 || col >= Size_of_board || board[row][col] != ' ') {
+   if(move >= 1 && move <=9){
+	   row = (move-1)/3; //Gives 0 for (1-3), 1 for (4-6) and 2 for (7-8)
+	   col = (move-1)%3; //Gives 0 for 1,4,7, 1 for 2,5,8 and 3 for 3,6,9
+   }
+   else{
+	cout << "Invalid input. Please enter a number between 1 and 9." << endl;
+  	get_move(row, col,player_mark); // Recursive call to get a valid move
+        return;
+	}
+	if (board[row][col] != ' ') {
         cout << "Invalid move. Try again." << endl;
         get_move(row, col, player_mark);
     }
+   
 }
 
 // Function to update the Tic Tac Toe board after a move
@@ -253,22 +216,15 @@ void update_board(int row, int col, char mark) {
 
 // Function to check win conditions
 int win_condition(char player_mark) {
-    // checking rows
-    if (board[0][0] == player_mark && board[0][1] == player_mark && board[0][2] == player_mark)
+	
+    // checking rows and cols
+	for(int i = 0; i < 3; i++){
+		if (board[i][0] == player_mark && board[i][1] == player_mark && board[i][2] == player_mark)
         return 1;
-    if (board[1][0] == player_mark && board[1][1] == player_mark && board[1][2] == player_mark)
+		if (board[0][i] == player_mark && board[1][i] == player_mark && board[2][i] == player_mark)
         return 1;
-    if (board[2][0] == player_mark && board[2][1] == player_mark && board[2][2] == player_mark)
-        return 1;
-
-    // checking cols
-    if (board[0][0] == player_mark && board[1][0] == player_mark && board[2][0] == player_mark)
-        return 1;
-    if (board[0][1] == player_mark && board[1][1] == player_mark && board[2][1] == player_mark)
-        return 1;
-    if (board[0][2] == player_mark && board[1][2] == player_mark && board[2][2] == player_mark)
-        return 1;
-
+	}
+	
     // checking diagonals
     if (board[0][0] == player_mark && board[1][1] == player_mark && board[2][2] == player_mark)
         return 1;
